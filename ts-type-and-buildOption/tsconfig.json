@@ -1,0 +1,31 @@
+/*
+    tsconfig.json
+    include
+    exclude 默认值 node_modules bower_components jspm_packages
+    extends 配置文件太复杂时 且在别的目录中已有对应的配置 可以直接继承该配置
+    files 指定需要编译的文件
+    compilerOptions 编译器的选项
+*/
+{
+    "include": [
+        "./**/*"
+    ], // 用来指定哪些ts文件需要被编译 *表示任意文件 **任意目录
+    "exclude": [], // 编译不包含的文件
+    "compilerOptions": {
+        "target": "es5", // 用来指 定ts被编译成的es版本 ESNext表示最新版本的es
+        "module": "es2015", // 指定要使用的模块化的规范(export import from那些)
+        // "lib": [], // 用来指定项目中要使用的库 []空着的话表示什么库都不用 一般跑在浏览器的不需要改 跑node环境中的代码可能需要改
+        "outDir": "./dist", // 指定编译完后的输出路径 默认就是文件的同级目录
+        // "outFile": "./dist/app.js", // 用来将编译文件代码合并为一个文件
+        "allowJs": false, // 是否对js文件进行编译
+        "checkJs": false, // 是否检查js代码
+        "removeComments": false, // 编译是否移除注释
+        "noEmit": false, // 不生成编译后的文件 相当于单纯做语法检查
+        "noEmitOnError": true, // 当编译有错误时不生成编译后的文件
+        "alwaysStrict": false, // 用来设置编译后的文件是否使用严格模式 默认false
+        "noImplicitAny": true, // 是否不允许隐式的any类型
+        "noImplicitThis": true, // 不允许不明确类型的this 如 this: window
+        "strictNullChecks": false, // 严格的检查空值 如 box1?.addEventListener('click', () => {})
+        "strict": false, // 所有严格检查的总开关 只要为true 所有严格检查项都为true(即使严格检查项单独设置为false)
+    }
+}
