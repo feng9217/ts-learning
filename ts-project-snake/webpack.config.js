@@ -104,12 +104,18 @@ module.exports = {
     // 配置webpack插件
     plugins: [
         new CleanWebpackPlugin(),
-        new HtmlWebpackPlugin({
-            title: '贪吃蛇'
-        })
+        new HtmlWebpackPlugin(
+            {
+                template: './src/index.html'
+            }
+        )
     ],
     // 用来设置引用模块 不设置build的时候对import export处理就会报错
     resolve: {
         extensions: ['.ts', '.js']
+    },
+    // 运行webpack-dev-server时的配置
+    devServer: {
+        port: 9527
     }
 }
