@@ -18,9 +18,10 @@ module.exports = {
         // 打包后文件的名字
         filename: 'bundle.js',
         // 环境配置 专门为ie环境取消掉箭头函数
-        // environment: {
-        //     arrowFunction: false
-        // }
+        environment: {
+            arrowFunction: false,
+            const: false
+        }
     },
     // 指定webpack打包时要使用的模块
     module: {
