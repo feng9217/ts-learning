@@ -23,6 +23,7 @@ module.exports = {
             const: false
         }
     },
+    mode: 'development',
     // 指定webpack打包时要使用的模块
     module: {
         // 指定要加载的规则
