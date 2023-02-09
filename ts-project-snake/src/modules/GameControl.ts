@@ -10,6 +10,10 @@ class GameControl {
     // 蛇的移动方向(按了什么方向按键)
     direction: string = ''
 
+    timer: any
+    // 记录游戏是否结束
+    isLive: Boolean = true
+
     constructor () {
         this.snake = new Snake()
         this.food = new Food()
@@ -22,14 +26,76 @@ class GameControl {
     init () {
         // 绑定键盘事件
         document.addEventListener('keydown', this.keyDownHandler.bind(this))
+        this.run()
     }
 
-    // press key 时的
+    // press key 时的处理方法
     keyDownHandler (event: KeyboardEvent) {
         // console.log(event, event.key)
         const directionCollection = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight']
-        if (directionCollection.includes(event.key)) this.direction = event.key
+        // if (directionCollection.includes(event.key)) this.direction = event.key
+        this.direction = event.key // 不设置条件 不然按别的键都会继续走
         console.log(this, this.direction)
+        if (directionCollection.includes(event.key)) {
+            if (!this.isLive) {
+                this.isLive = true
+                this.snake.X = 0
+                this.snake.Y = 0
+            }
+            if (!this.timer) this.run()
+        } else {
+            this.timer = null
+        }
     }
+
+    // 控制蛇移动的方法 根据direction改变蛇的位置
+    // 向上 top-- 向下 top++ 向左 left-- 向右 left++
+    run () {
+        let X = this.snake.X
+        let Y = this.snake.Y
+        console.log(X, Y)
+
+        switch (this.direction) {
+            case 'ArrowUp':
+            case 'Up':
+                Y -= 10
+                break
+            case 'ArrowDown':
+            case 'Down':
+                Y += 10
+                break
+            case 'ArrowLeft':
+            case 'Left':
+                X -= 10
+                break
+            case 'ArrowRight':
+            case 'Right':
+                X += 10
+                break
+            default:
+                break
+        }
+        console.log(X, Y)
+        // max Y = 300 / max X = 310
+        if (Y > 300 || X > 310 || Y < 0 || X < 0) {
+            this.isLive = false
+            this.timer = null
+            let answer = window.confirm('游戏结束!!')
+            if (answer) {
+                this.snake.X = 0
+                this.snake.Y = 0
+            }
+            return
+        }
+        this.snake.X = X
+        this.snake.Y = Y
+        // setTimeout(this.run.bind(this), 300)
+        if (this.isLive) {
+            this.timer = setTimeout(() => {
+                this.run()
+            }, 500 - (this.scorePanel.level - 1) * 30)
+        }
+    }
+
 }
 export default GameControl
