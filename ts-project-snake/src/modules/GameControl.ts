@@ -31,20 +31,24 @@ class GameControl {
 
     // press key 时的处理方法
     keyDownHandler (event: KeyboardEvent) {
-        // console.log(event, event.key)
-        const directionCollection = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight']
-        // if (directionCollection.includes(event.key)) this.direction = event.key
-        this.direction = event.key // 不设置条件 不然按别的键都会继续走
-        console.log(this, this.direction)
-        if (directionCollection.includes(event.key)) {
+        console.log(event, event.key)
+        const directionCollection = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', ' ']
+        if (directionCollection.includes(event.key)) this.direction = event.key
+        // this.direction = event.key // 不设置条件 不然按别的键都会继续走
+        console.log(this.direction)
+        // 按空格触发暂停
+        if (event.key === ' ') {
+            this.timer = null
+            return
+        } else if (directionCollection.includes(event.key)) {
+            // 复位后第一次先不触发游戏开启
             if (!this.isLive) {
                 this.isLive = true
                 this.snake.X = 0
                 this.snake.Y = 0
+                return
             }
             if (!this.timer) this.run()
-        } else {
-            this.timer = null
         }
     }
 
@@ -84,6 +88,7 @@ class GameControl {
             if (answer) {
                 this.snake.X = 0
                 this.snake.Y = 0
+                this.isLive = true
             }
             return
         }
