@@ -35,7 +35,7 @@ class GameControl {
         const directionCollection = ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', ' ']
         if (directionCollection.includes(event.key)) this.direction = event.key
         // this.direction = event.key // 不设置条件 不然按别的键都会继续走
-        console.log(this.direction)
+        // console.log(this.direction)
         // 按空格触发暂停
         if (event.key === ' ') {
             this.timer = null
@@ -57,7 +57,7 @@ class GameControl {
     run () {
         let X = this.snake.X
         let Y = this.snake.Y
-        console.log(X, Y)
+        // console.log(X, Y)
 
         switch (this.direction) {
             case 'ArrowUp':
@@ -79,9 +79,13 @@ class GameControl {
             default:
                 break
         }
-        console.log(X, Y)
+        // console.log(X, Y)
+
+        this.checkGotFood(X, Y)
+
         // max Y = 300 / max X = 310
         if (Y > 300 || X > 310 || Y < 0 || X < 0) {
+            // throw new Error('游戏结束!!')
             this.isLive = false
             this.timer = null
             let answer = window.confirm('游戏结束!!')
@@ -99,6 +103,19 @@ class GameControl {
             this.timer = setTimeout(() => {
                 this.run()
             }, 500 - (this.scorePanel.level - 1) * 30)
+        }
+    }
+
+    checkGotFood (X: number, Y:number) {
+        // 判断和蛇头位置是否重合
+        if (X === this.food.X && Y === this.food.Y) {
+            console.log('吃到食物')
+            // 吃到食物后 需要刷新食物位置
+            this.food.change()
+            // 加分
+            this.scorePanel.addScore()
+            // 蛇加一节
+            this.snake.addBody()
         }
     }
 

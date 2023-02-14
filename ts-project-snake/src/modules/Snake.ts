@@ -20,9 +20,15 @@ class Snake {
     }
 
     set X (value: number) {
+        if (this.X === value) return
+        // 也可以在此处做X/Y值判断 超出边界则
+        // if (value < 0 || value > 300) throw new Error('蛇撞墙了!')
         this.head.style.left = value + 'px'
     }
     set Y (value: number) {
+        if (this.Y === value) return
+        // 也可以在此处做X/Y值判断 超出边界则
+        // if (value < 0 || value > 310) throw new Error('蛇撞墙了!')
         this.head.style.top = value + 'px'
     }
 
