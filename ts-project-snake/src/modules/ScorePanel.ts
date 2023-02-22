@@ -13,7 +13,7 @@ class ScorePanel {
     maxLevel: number
     upScore: number
 
-    constructor (maxLevel: number = 10, upScore: number = 10) {
+    constructor (maxLevel: number = 10, upScore: number = 3) {
         this.scoreEle = document.getElementById('score')!
         this.levelEle = document.getElementById('level')!
         this.maxLevel = maxLevel
@@ -31,6 +31,13 @@ class ScorePanel {
     // 等级提升
     levelUp () {
         if (this.level < this.maxLevel) this.levelEle.innerHTML = 'LEVEL:' + ++this.level
+    }
+
+    resetPanel () {
+        this.score = 0
+        this.level = 1
+        this.scoreEle.innerHTML = 'SCORE:' + this.score
+        this.levelEle.innerHTML = 'LEVEL:' + this.level
     }
 }
 

@@ -41,6 +41,8 @@ class Snake {
         this.moveBody()
 
         this.head.style.left = value + 'px'
+
+        this.checkHitBody()
     }
     set Y (value: number) {
         if (this.Y === value) return
@@ -62,6 +64,8 @@ class Snake {
         this.moveBody()
 
         this.head.style.top = value + 'px'
+
+        this.checkHitBody()
     }
 
     // 增加身体长度(吃食后) 往#snake添加元素
@@ -80,6 +84,24 @@ class Snake {
             // 将值设置到当前身体上
             (this.bodies[i] as HTMLElement).style.left = X + 'px';
             (this.bodies[i] as HTMLElement).style.top = Y + 'px';
+        }
+    }
+    // 检查是否咬到自己
+    checkHitBody () {
+        // 从身体开始遍历 检查是否和蛇头(i = 0)的位置是否重叠
+        for (let i = 1; i < this.bodies.length; i++) {
+            let body = (this.bodies[i] as HTMLElement);
+            if (this.X === body.offsetLeft && this.Y === body.offsetTop) {
+                // 撞到自己 游戏结束
+                throw new Error('撞到自己了')
+            }
+        }
+    }
+    // 重置游戏时重置身体长度
+    resetBody () {
+        // 留个头
+        while (this.element.lastChild && this.bodies.length > 1) {
+            this.element.removeChild(this.element.lastChild)
         }
     }
 }

@@ -44,6 +44,8 @@ class GameControl {
             // 复位后第一次先不触发游戏开启
             if (!this.isLive) {
                 this.isLive = true
+                this.snake.resetBody()
+                this.scorePanel.resetPanel()
                 this.snake.X = 0
                 this.snake.Y = 0
                 return
@@ -86,18 +88,16 @@ class GameControl {
         // max Y = 300 / max X = 310
         if (Y > 300 || X > 310 || Y < 0 || X < 0) {
             // throw new Error('游戏结束!!')
-            this.isLive = false
-            this.timer = null
-            let answer = window.confirm('游戏结束!!')
-            if (answer) {
-                this.snake.X = 0
-                this.snake.Y = 0
-                this.isLive = true
-            }
+            this.stopGame()
             return
         }
-        this.snake.X = X
-        this.snake.Y = Y
+        try {
+            this.snake.X = X
+            this.snake.Y = Y
+        } catch (error) {
+            console.log(error, '游戏终止')
+            this.stopGame()
+        }
         // setTimeout(this.run.bind(this), 300)
         if (this.isLive) {
             this.timer = setTimeout(() => {
@@ -116,6 +116,19 @@ class GameControl {
             this.scorePanel.addScore()
             // 蛇加一节
             this.snake.addBody()
+        }
+    }
+
+    stopGame () {
+        this.isLive = false
+        this.timer = null
+        let answer = window.confirm('游戏结束!!')
+        if (answer) {
+            this.snake.resetBody()
+            this.scorePanel.resetPanel()
+            this.snake.X = 0
+            this.snake.Y = 0
+            this.isLive = true
         }
     }
 
