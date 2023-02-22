@@ -24,6 +24,19 @@ class Snake {
         if (this.X === value) return
         // 也可以在此处做X/Y值判断 超出边界则
         // if (value < 0 || value > 300) throw new Error('蛇撞墙了!')
+
+        // 做方向判断 不能让蛇调头
+        if (this.bodies[1] && (this.bodies[1] as HTMLElement).offsetLeft === value) {
+            // console.log('发生水平调头')
+            // 修正调头
+            // 新值大于旧X值 则说明在向右走 此时发生调头 则应该使蛇继续向左走
+            if (value > this.X) {
+                value = this.X - 10
+            } else {
+                value = this.X + 10
+            }
+        }
+
         // 移动身体
         this.moveBody()
 
@@ -33,6 +46,18 @@ class Snake {
         if (this.Y === value) return
         // 也可以在此处做X/Y值判断 超出边界则
         // if (value < 0 || value > 310) throw new Error('蛇撞墙了!')
+
+        // 做方向判断 不能让蛇调头
+        if (this.bodies[1] && (this.bodies[1] as HTMLElement).offsetTop === value) {
+            // console.log('发生水平调头')
+            // 修正调头
+            if (value > this.Y) {
+                value = this.Y - 10
+            } else {
+                value = this.Y + 10
+            }
+        }
+
         // 移动身体
         this.moveBody()
 

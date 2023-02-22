@@ -102,7 +102,7 @@ class GameControl {
         if (this.isLive) {
             this.timer = setTimeout(() => {
                 this.run()
-            }, 500 - (this.scorePanel.level - 1) * 30)
+            }, 420 - (this.scorePanel.level - 1) * 30)
         }
     }
 
